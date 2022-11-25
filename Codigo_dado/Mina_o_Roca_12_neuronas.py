@@ -73,7 +73,8 @@ train_x, test_x, train_y, test_y = train_test_split(X, Y, test_size=0.07, random
 #---------------------------------------------
 # PARAMETRIZACIÓN DE LA RED NEURONAL
 #---------------------------------------------
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 epochs = 300
 cantidad_neuronas_entrada = 60
@@ -98,7 +99,7 @@ pesos = {
 }
 
 peso_sesgo = {
-     #1 sesgo de la capa de entrada hacia las 24 neuronas de la capa oculta
+    #1 sesgo de la capa de entrada hacia las 24 neuronas de la capa oculta
     'peso_sesgo_capa_entrada_hacia_oculta': tf.Variable(tf.zeros([12]), tf.float32),
 
     #1 sesgo de la capa oculta hacia las 2 neuronas de la capa de salida
@@ -162,15 +163,15 @@ Grafica_MSE=[]
 #Para cada epoch
 for i in range(epochs):
 
-   #Realización del aprendizaje con actualización de los pesos
-   sesion.run(optimizador, feed_dict = {tf_neuronas_entradas_X: train_x, tf_valores_reales_Y:train_y})
+    #Realización del aprendizaje con actualización de los pesos
+    sesion.run(optimizador, feed_dict = {tf_neuronas_entradas_X: train_x, tf_valores_reales_Y:train_y})
 
-   #Calcular el error de aprendizaje
-   MSE = sesion.run(funcion_error, feed_dict = {tf_neuronas_entradas_X: train_x, tf_valores_reales_Y:train_y})
+    #Calcular el error de aprendizaje
+    MSE = sesion.run(funcion_error, feed_dict = {tf_neuronas_entradas_X: train_x, tf_valores_reales_Y:train_y})
 
-   #Visualización de la información
-   Grafica_MSE.append(MSE)
-   print("EPOCH (" + str(i) + "/" + str(epochs) + ") -  MSE: "+ str(MSE))
+    #Visualización de la información
+    Grafica_MSE.append(MSE)
+    print("EPOCH (" + str(i) + "/" + str(epochs) + ") -  MSE: "+ str(MSE))
 
 
 #Visualización gráfica MSE
